@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import LocationSelect from './components/LocationSelect.vue';
+  import {northIsland} from "./lib/places";
 
-  const northIsland = ["Auckland", "Hamilton", "Ohakune", "Wellington"];
   const southIsland = ["Christchurch", "Picton", "Greymouth", "Dunedin", "Invercargill", "Queenstown"];
 
   const from = ref("");
@@ -25,13 +25,17 @@
   function handleSiOpen() {
     siOpen.value = !siOpen.value;
   }
+
+  function handleLocationSelect(location: any) {
+    from.value = location;
+  }
 </script>
 
 <template>
   <div class='flex justify-center text-left'>
     <div class='flex items-center justify-start p-3 w-full border-2 rounded-xl border-gj-green'>
       <!-- From -->
-      <LocationSelect label='From' :selected-location='from' title="Departure From" :select-open='fromOpen' :handle-open='handleFromOpen' :handle-ni-open='handleNiOpen' :handle-place-select='handleFromSelect' :handle-si-open='handleSiOpen' :ni-open='niOpen' :si-open='siOpen' :northIsland='northIsland' :southIsland='southIsland' />
+      <LocationSelect label='From' :selected-location='from' title="Departure From" :select-open='fromOpen' :handle-open='handleFromOpen' :handle-ni-open='handleNiOpen' :handle-place-select='handleFromSelect' :handle-si-open='handleSiOpen' :ni-open='niOpen' :si-open='siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleLocationSelect' />
 
       <!-- To -->
       <div class='flex flex-col w-full mx-3'>
