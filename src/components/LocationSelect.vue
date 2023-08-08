@@ -52,12 +52,11 @@ defineProps<{
               <div class="p-4 w-1/2">
                 <h2 class="text-lg text-gj-green">{{ title }}</h2>
                 <div>
-                  <div class="flex justify-between items-center text-left mt-2">
+                  <div @click="handleNiOpen" class="flex justify-between items-center text-left mt-2 cursor-pointer">
                     <span class="text-gj-green font-semibold text-xl"
                       >North Island</span
                     >
                     <PhCaretUp
-                      @click="handleNiOpen"
                       :size="12"
                       weight="bold"
                       :class="niOpen ? 'rotate-180' : 'rotate-90'"
@@ -70,7 +69,7 @@ defineProps<{
                       :key="place"
                       class="group relative p-2 hover:bg-gray-50 cursor-pointer"
                     >
-                      <div
+                      <div @click='handlePlaceSelect(place)'
                         class="font-semibold border-b text-gray-900"
                       >
                         {{ place }}
@@ -80,12 +79,11 @@ defineProps<{
                   </template>
                 </div>
                 <div class='mt-3'>
-                  <div class="flex justify-between items-center text-left mt-2">
+                  <div @click="handleSiOpen" class="flex justify-between items-center text-left mt-2 cursor-pointer">
                     <span class="text-gj-green font-semibold text-xl"
                       >South Island</span
                     >
                     <PhCaretUp
-                      @click="handleSiOpen"
                       :size="12"
                       weight="bold"
                       :class="siOpen ? 'rotate-180' : 'rotate-90'"
@@ -98,7 +96,7 @@ defineProps<{
                       :key="place"
                       class="group relative p-2 hover:bg-gray-50 cursor-pointer"
                     >
-                      <div
+                      <div @click='handlePlaceSelect(place)'
                         class="font-semibold border-b text-gray-900"
                       >
                         {{ place }}

@@ -12,7 +12,6 @@
 
   function handleFromSelect(location: string) {
     from.value = location;
-    console.log(from.value);
   }
 
   function handleFromOpen() {
