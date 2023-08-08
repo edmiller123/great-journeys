@@ -4,6 +4,9 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import nzSVG from "./nzSVG.vue";
 
 defineProps<{
+  places: any;
+  getHoveredLocation: (location: any) => void;
+  hoveredLocation: any;
   label: string;
   handleOpen: () => void;
   selectedLocation: any;
@@ -14,8 +17,7 @@ defineProps<{
   handleNiOpen: () => void;
   handleSiOpen: () => void;
   northIsland: any;
-  southIsland: string[];
-  handlePlaceSelect: (place: string) => void;
+  southIsland: any;
   handleLocationSelect: (place: any) => void;
 }>();
 </script>
@@ -76,6 +78,7 @@ defineProps<{
                     >
                       <div
                         @click="handleLocationSelect(place)"
+                        @mouseover='getHoveredLocation(place)'
                         class="font-semibold border-b text-gray-900"
                       >
                         {{ place.name }}
@@ -102,14 +105,15 @@ defineProps<{
                   <template v-if="siOpen">
                     <div
                       v-for="place in southIsland"
-                      :key="place"
+                      :key="place.name"
                       class="group relative p-2 hover:bg-gray-50 cursor-pointer"
                     >
                       <div
-                        @click="handlePlaceSelect(place)"
+                        @click="handleLocationSelect(place)"
+                        @mouseover='getHoveredLocation(place)'
                         class="font-semibold border-b text-gray-900"
                       >
-                        {{ place }}
+                        {{ place.name }}
                         <span class="absolute inset-0" />
                       </div>
                     </div>
@@ -117,9 +121,9 @@ defineProps<{
                 </div>
               </div>
               <div
-                class="w-1/2 flex justify-center items-center h-full mt-8 mb-4 py-4"
+                class="w-1/2 flex justify-center items-center h-full mt-8 mb-4 py-4 cursor-pointer"
               >
-              <nzSVG :selectedLocation='selectedLocation' />
+              <nzSVG :selectedLocation='selectedLocation' :hoveredLocation='hoveredLocation' places='places' />
               </div>
             </div>
             <div class="p-4 text-white transition-all">
