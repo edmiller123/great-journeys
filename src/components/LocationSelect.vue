@@ -123,7 +123,7 @@ defineProps<{
               <div
                 class="w-1/2 flex justify-center items-center h-full mt-8 mb-4 py-4 cursor-pointer"
               >
-              <nzSVG :selectedLocation='selectedLocation' :hoveredLocation='hoveredLocation' places='places' />
+              <nzSVG :selectedLocation='selectedLocation' :hoveredLocation='hoveredLocation' :places='places' :getHoveredLocation='getHoveredLocation' :handle-location-select='handleLocationSelect' />
               </div>
             </div>
             <div class="p-4 text-white transition-all">

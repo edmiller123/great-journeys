@@ -3,7 +3,9 @@
 defineProps<{
   selectedLocation: any;
   hoveredLocation: any;
-  places: any
+  places: any;
+  getHoveredLocation: (place: any) => void;
+  handleLocationSelect: (place: any) => void;
 }>();
 </script>
 
@@ -36,13 +38,16 @@ defineProps<{
       ></path>
       <template v-for='place in places' :key='place.name'>
         <circle
+        @click='handleLocationSelect(place)'
+        @mouseover='getHoveredLocation(place)'
         :cx="place.x"
         :cy="place.y"
         r="30"
         stroke="#f1f5f9"
         stroke-width="15"
-        fill="#22c55e"
-      />
+        :fill="hoveredLocation.name === place.name ?'#dc2626' : '#22c55e'">
+        <title>{{ place.name }}</title>
+      </circle>
     </template>
 
       <!-- <circle
@@ -62,16 +67,6 @@ defineProps<{
         stroke="#f1f5f9"
         stroke-width="15"
         fill="#22c55e"
-      />
-      <circle
-        v-else
-        class='hidden'
-        :cx="0"
-        :cy="0"
-        r="30"
-        stroke="#ffffff"
-        stroke-width="0"
-        fill="#ffffff"
       /> -->
     </g>
   </svg>

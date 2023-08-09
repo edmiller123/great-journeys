@@ -6,8 +6,6 @@
   const from = ref({place: "", open: false, niOpen: false, siOpen: false});
   const hoveredLocation = ref({name: "", x: "", y: ""});
 
-  console.log(places);
-
   function handleFromOpen() {
     from.value.open = !from.value.open;
     
@@ -27,7 +25,6 @@
 
   function getHoveredLocation(location: any) {
     hoveredLocation.value = location;
-    console.log(location);
   }
 </script>
 
