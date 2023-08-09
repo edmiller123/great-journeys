@@ -73,7 +73,7 @@
       <LocationSelect :next='fromNext' :places='places' :getHoveredLocation='getHoveredLocation' :hoveredLocation='from.hovered' label='From' :selected-location='from.place' title="Departure From" :select-open='from.open' :handle-open='handleFromOpen' :handle-ni-open='handleNiOpen' :handle-si-open='handleSiOpen' :ni-open='from.niOpen' :si-open='from.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleFromLocationSelect' />
 
       <!-- To -->
-      <LocationSelect :next='toNext' :places='places' :getHoveredLocation='getToHoveredLocation' :hoveredLocation='to.hovered' label='To' :selected-location='to.place' title="Departure To" :select-open='to.open' :handle-open='handleToOpen' :handle-ni-open='handleToNiOpen' :handle-si-open='handleToSiOpen' :ni-open='to.niOpen' :si-open='to.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleToLocationSelect' />
+      <LocationSelect :next='toNext' :places='places' :getHoveredLocation='getToHoveredLocation' :hoveredLocation='to.hovered' label='To' :selected-location='to.place' title="Travelling To" :select-open='to.open' :handle-open='handleToOpen' :handle-ni-open='handleToNiOpen' :handle-si-open='handleToSiOpen' :ni-open='to.niOpen' :si-open='to.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleToLocationSelect' />
 
       <!-- Leave On -->
       <CalendarSelect label='Leave On' :selectedDate='leaveDate' v-model='leaveDate' />
