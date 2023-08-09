@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { PhCaretUp, PhCaretDown } from "@phosphor-icons/vue";
+import { PhCaretUp, PhCaretDown, PhCheck } from "@phosphor-icons/vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import nzSVG from "./nzSVG.vue";
 
@@ -84,10 +84,11 @@ defineProps<{
                       <div
                         @click="handleLocationSelect(place)"
                         @mouseover="getHoveredLocation(place)"
-                        class="font-semibold border-b text-gray-900"
+                        class="flex items-center justify-between font-semibold border-b text-gray-900"
                       >
                         {{ place.name }}
                         <span class="absolute inset-0" />
+                        <PhCheck v-if='place.name === selectedLocation.name' :size="20" color="#205052" weight="bold" />
                       </div>
                     </div>
                   </template>
@@ -120,10 +121,11 @@ defineProps<{
                       <div
                         @click="handleLocationSelect(place)"
                         @mouseover="getHoveredLocation(place)"
-                        class="font-semibold border-b text-gray-900"
+                        class="flex items-center justify-between font-semibold border-b text-gray-900"
                       >
                         {{ place.name }}
                         <span class="absolute inset-0" />
+                        <PhCheck v-if='place.name === selectedLocation.name' :size="20" color="#205052" weight="bold" />
                       </div>
                     </div>
                   </template>
