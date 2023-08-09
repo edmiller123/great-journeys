@@ -40,6 +40,7 @@ defineProps<{
         <circle
         @click='handleLocationSelect(place)'
         @mouseover='getHoveredLocation(place)'
+        class='cursor-pointer'
         :cx="place.x"
         :cy="place.y"
         r="30"

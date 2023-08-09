@@ -74,7 +74,7 @@ defineProps<{
                     <div
                       v-for="place in northIsland"
                       :key="place.name"
-                      class="group relative p-2 hover:bg-gray-50 cursor-pointer"
+                      :class="hoveredLocation.name === place.name ? 'group relative p-2 bg-gray-50 cursor-pointer' : 'group relative p-2 hover:bg-gray-50 cursor-pointer'"
                     >
                       <div
                         @click="handleLocationSelect(place)"
@@ -106,7 +106,7 @@ defineProps<{
                     <div
                       v-for="place in southIsland"
                       :key="place.name"
-                      class="group relative p-2 hover:bg-gray-50 cursor-pointer"
+                      :class="hoveredLocation.name === place.name ? 'group relative p-2 bg-gray-50 cursor-pointer' : 'group relative p-2 hover:bg-gray-50 cursor-pointer'"
                     >
                       <div
                         @click="handleLocationSelect(place)"
