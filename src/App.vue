@@ -1,10 +1,19 @@
 <script setup lang="ts">
-  import { ref } from 'vue';
+  import { ref, watch } from 'vue';
   import LocationSelect from './components/LocationSelect.vue';
   import {northIsland, places, southIsland} from "./lib/places";
+  import CalendarSelect from './components/CalendarSelect.vue';
 
-  const from = ref({place: "", open: false, niOpen: false, siOpen: false});
-  const hoveredLocation = ref({name: "", x: "", y: ""});
+  const from = ref({place: "", hovered: "", open: false, niOpen: true, siOpen: true});
+  const to = ref({place: "", hovered: "", open: false, niOpen: true, siOpen: true});
+  const leaveDate = ref("");
+  const returnDate = ref("");
+
+  watch(leaveDate, (newLeaveDate, oldLeaveDate) => {
+    if(newLeaveDate !== oldLeaveDate) {
+      console.log(leaveDate);
+    }
+  })
 
   function handleFromOpen() {
     from.value.open = !from.value.open;
@@ -24,7 +33,36 @@
   }
 
   function getHoveredLocation(location: any) {
-    hoveredLocation.value = location;
+    from.value.hovered = location;
+  }
+
+  function fromNext() {
+    to.value.open = true;
+  }
+
+  function handleToOpen() {
+    to.value.open = !to.value.open;
+    
+  }
+
+  function handleToNiOpen() {
+    to.value.niOpen = !to.value.niOpen;
+  }
+
+  function handleToSiOpen() {
+    to.value.siOpen = !to.value.siOpen;
+  }
+
+  function handleToLocationSelect(location: any) {
+    to.value.place = location;
+  }
+
+  function getToHoveredLocation(location: any) {
+    to.value.hovered = location;
+  }
+
+  function toNext() {
+    to.value.open = true;
   }
 </script>
 
@@ -32,25 +70,16 @@
   <div class='flex justify-center text-left'>
     <div class='flex items-center justify-start p-3 w-full border-2 rounded-xl border-gj-green'>
       <!-- From -->
-      <LocationSelect :places='places' :getHoveredLocation='getHoveredLocation' :hoveredLocation='hoveredLocation' label='From' :selected-location='from.place' title="Departure From" :select-open='from.open' :handle-open='handleFromOpen' :handle-ni-open='handleNiOpen' :handle-si-open='handleSiOpen' :ni-open='from.niOpen' :si-open='from.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleFromLocationSelect' />
+      <LocationSelect :next='fromNext' :places='places' :getHoveredLocation='getHoveredLocation' :hoveredLocation='from.hovered' label='From' :selected-location='from.place' title="Departure From" :select-open='from.open' :handle-open='handleFromOpen' :handle-ni-open='handleNiOpen' :handle-si-open='handleSiOpen' :ni-open='from.niOpen' :si-open='from.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleFromLocationSelect' />
 
       <!-- To -->
-      <div class='flex flex-col w-full mx-3'>
-        <label class='font-semibold'>To</label>
-        <select v-model='from' class='border border-gj-green rounded-md h-12 cursor-pointer focus:outline-none'></select>
-      </div>
+      <LocationSelect :next='toNext' :places='places' :getHoveredLocation='getToHoveredLocation' :hoveredLocation='to.hovered' label='To' :selected-location='to.place' title="Departure To" :select-open='to.open' :handle-open='handleToOpen' :handle-ni-open='handleToNiOpen' :handle-si-open='handleToSiOpen' :ni-open='to.niOpen' :si-open='to.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleToLocationSelect' />
 
       <!-- Leave On -->
-      <div class='flex flex-col w-full mx-3'>
-        <label class='font-semibold'>Leave on</label>
-        <select v-model='from' class='border border-gj-green rounded-md h-12 cursor-pointer focus:outline-none'></select>
-      </div>
+      <CalendarSelect label='Leave On' :selectedDate='leaveDate' v-model='leaveDate' />
 
       <!-- Return On -->
-      <div class='flex flex-col w-full mx-3'>
-        <label class='font-semibold'>Return on</label>
-        <select v-model='from' class='border border-gj-green rounded-md h-12 cursor-pointer focus:outline-none'></select>
-      </div>
+      <CalendarSelect label='Return On' :selectedDate='returnDate' v-model='returnDate' />
     </div>
   </div>
 </template>

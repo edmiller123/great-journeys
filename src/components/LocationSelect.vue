@@ -4,6 +4,7 @@ import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import nzSVG from "./nzSVG.vue";
 
 defineProps<{
+  next: () => void;
   places: any;
   getHoveredLocation: (location: any) => void;
   hoveredLocation: any;
@@ -29,7 +30,7 @@ defineProps<{
       <PopoverButton
         class="relative flex items-center pl-3 border border-gj-green rounded-md h-12 cursor-pointer hover:border-gj-green focus:outline-none"
       >
-        <div @click="handleOpen" class="">
+        <div @click="handleOpen">
           <span>{{ selectedLocation.name }}</span>
           <PhCaretDown
             :size="12"
@@ -47,7 +48,7 @@ defineProps<{
         leave-to-class="opacity-0 translate-y-1"
       >
         <PopoverPanel
-          class="absolute left-80 z-10 mt-20 min-h-96 flex mx-h-max w-screen max-w-max -translate-x-1/2 px-4"
+          class="absolute left-80 z-10 mt-20 min-h-96 flex max-h-max w-screen max-w-max -translate-x-1/2 px-4"
         >
           <div
             class="w-screen max-w-2xl min-h-96 flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5"
@@ -74,11 +75,15 @@ defineProps<{
                     <div
                       v-for="place in northIsland"
                       :key="place.name"
-                      :class="hoveredLocation.name === place.name ? 'group relative p-2 bg-gray-50 cursor-pointer' : 'group relative p-2 hover:bg-gray-50 cursor-pointer'"
+                      :class="
+                        hoveredLocation.name === place.name
+                          ? 'group relative p-2 bg-gray-50 cursor-pointer'
+                          : 'group relative p-2 hover:bg-gray-50 cursor-pointer'
+                      "
                     >
                       <div
                         @click="handleLocationSelect(place)"
-                        @mouseover='getHoveredLocation(place)'
+                        @mouseover="getHoveredLocation(place)"
                         class="font-semibold border-b text-gray-900"
                       >
                         {{ place.name }}
@@ -106,11 +111,15 @@ defineProps<{
                     <div
                       v-for="place in southIsland"
                       :key="place.name"
-                      :class="hoveredLocation.name === place.name ? 'group relative p-2 bg-gray-50 cursor-pointer' : 'group relative p-2 hover:bg-gray-50 cursor-pointer'"
+                      :class="
+                        hoveredLocation.name === place.name
+                          ? 'group relative p-2 bg-gray-50 cursor-pointer'
+                          : 'group relative p-2 hover:bg-gray-50 cursor-pointer'
+                      "
                     >
                       <div
                         @click="handleLocationSelect(place)"
-                        @mouseover='getHoveredLocation(place)'
+                        @mouseover="getHoveredLocation(place)"
                         class="font-semibold border-b text-gray-900"
                       >
                         {{ place.name }}
@@ -123,15 +132,26 @@ defineProps<{
               <div
                 class="w-1/2 flex justify-center items-center h-full mt-8 mb-4 py-4 cursor-pointer"
               >
-              <nzSVG :selectedLocation='selectedLocation' :hoveredLocation='hoveredLocation' :places='places' :getHoveredLocation='getHoveredLocation' :handle-location-select='handleLocationSelect' />
+                <nzSVG
+                  :selectedLocation="selectedLocation"
+                  :hoveredLocation="hoveredLocation"
+                  :places="places"
+                  :getHoveredLocation="getHoveredLocation"
+                  :handle-location-select="handleLocationSelect"
+                />
               </div>
             </div>
             <div class="p-4 text-white transition-all">
-              <button
-                class="bg-gj-green uppercase w-1/3 py-4 text-xl hover:bg-gj-green-hover"
-              >
-                Next
-              </button>
+              <PopoverButton
+                :disabled="!selectedLocation"
+                @click="next"
+                :class="
+                  !selectedLocation
+                    ? 'bg-gray-300 uppercase w-1/3 py-4 text-xl focus:outline-none hover:outline-none'
+                    : 'bg-gj-green uppercase w-1/3 py-4 text-xl cursor-pointer hover:bg-gj-green-hover'
+                "
+              >Next
+              </PopoverButton>
             </div>
           </div>
         </PopoverPanel>
