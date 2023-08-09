@@ -9,8 +9,8 @@
   const leaveDate = ref("");
   const returnDate = ref("");
 
-  watch(leaveDate, (newLeaveDate, oldLeaveDate) => {
-    if(newLeaveDate !== oldLeaveDate) {
+  watch(leaveDate, (newQuestion, oldQuestion) => {
+    if(newQuestion !== oldQuestion) {
       console.log(leaveDate);
     }
   })
@@ -76,10 +76,10 @@
       <LocationSelect :next='toNext' :places='places' :getHoveredLocation='getToHoveredLocation' :hoveredLocation='to.hovered' label='To' :selected-location='to.place' title="Travelling To" :select-open='to.open' :handle-open='handleToOpen' :handle-ni-open='handleToNiOpen' :handle-si-open='handleToSiOpen' :ni-open='to.niOpen' :si-open='to.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleToLocationSelect' />
 
       <!-- Leave On -->
-      <CalendarSelect label='Leave On' :selectedDate='leaveDate' v-model='leaveDate' />
+      <CalendarSelect label='Leave On' :model-value='leaveDate' @update:modelValue="(newValue: string) => leaveDate = newValue" :selectedDate='leaveDate' />
 
       <!-- Return On -->
-      <CalendarSelect label='Return On' :selectedDate='returnDate' v-model='returnDate' />
+      <CalendarSelect label='Return On' v-model='returnDate' />
     </div>
   </div>
 </template>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
-defineProps(['label', 'modelValue']);
+import { DatePicker } from 'ant-design-vue';
+defineProps(['label', 'modelValue', 'handleLeaveChange', 'selectedDate']);
 defineEmits(['update:modelvalue']);
 </script>
 
@@ -7,10 +8,7 @@ defineEmits(['update:modelvalue']);
   <div class="flex flex-col w-full mx-3">
     <div class='relative flex flex-col'>
       <label class="font-semibold">{{ label }}</label>
-      <div class="relative flex items-center pl-3 border border-gj-green rounded-md h-12 cursor-pointer hover:border-gj-green focus:outline-none">
-        <!-- @vue-ignore -->
-        <input type='date' class='pr-1 border-none w-full outline-none cursor-pointer focus:border-none focus:outline-none' :value='modelValue' @input="$emit('update:modelValue', $event.target.value)" />
-      </div>
+      <DatePicker size='large' class='border-gj-green h-12 hover:border-gj-green' placeholder='' popup-class-name='createDatePicker' :value='modelValue' @input="$emit('update:modelValue', $event.target.value)" />
     </div>
   </div>
 </template>

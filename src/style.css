@@ -70,3 +70,22 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.createDatePicker
+  .ant-picker-cell-in-view.ant-picker-cell-today
+  .ant-picker-cell-inner::before {
+  border-color: #205052 !important;
+}
+
+.createDatePicker .ant-picker-cell-selected
+  .ant-picker-cell-inner {
+  background: #205052 !important;
+}
+
+.createDatePicker .ant-btn-primary {
+  background-color: #205052 !important;
+  border-color: #205052 !important;
+}
+:where(.css-dev-only-do-not-override-eq3tly).ant-picker-dropdown .ant-picker-today-btn {
+  color: #205052;
+}
