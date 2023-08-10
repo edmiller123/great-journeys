@@ -1,88 +1,177 @@
 <script setup lang="ts">
-  import { ref, watch } from 'vue';
-  import LocationSelect from './components/LocationSelect.vue';
-  import {northIsland, places, southIsland} from "./lib/places";
-  import CalendarSelect from './components/CalendarSelect.vue';
+import { ref, watch } from "vue";
+import LocationSelect from "./components/LocationSelect.vue";
+import { northIsland, places, southIsland } from "./lib/places";
+import CalendarSelect from "./components/CalendarSelect.vue";
 
-  const from = ref({place: "", hovered: "", open: false, niOpen: true, siOpen: true});
-  const to = ref({place: "", hovered: "", open: false, niOpen: true, siOpen: true});
-  const leaveDate = ref("");
-  const returnDate = ref("");
+const from = ref({
+  place: "",
+  hovered: "",
+  open: false,
+  niOpen: true,
+  siOpen: true,
+});
+const to = ref({
+  place: "",
+  hovered: "",
+  open: false,
+  niOpen: true,
+  siOpen: true,
+});
+const leaveDate = ref("");
+const returnDate = ref("");
 
-  watch(leaveDate, (newQuestion, oldQuestion) => {
-    if(newQuestion !== oldQuestion) {
-      console.log(leaveDate);
-    }
-  })
-
-  function handleFromOpen() {
-    from.value.open = !from.value.open;
-    
+watch(leaveDate, (newQuestion, oldQuestion) => {
+  if (newQuestion !== oldQuestion) {
+    console.log(leaveDate);
   }
+});
 
-  function handleNiOpen() {
-    from.value.niOpen = !from.value.niOpen;
-  }
+function handleFromOpen() {
+  from.value.open = !from.value.open;
+}
 
-  function handleSiOpen() {
-    from.value.siOpen = !from.value.siOpen;
-  }
+function handleNiOpen() {
+  from.value.niOpen = !from.value.niOpen;
+}
 
-  function handleFromLocationSelect(location: any) {
-    from.value.place = location;
-  }
+function handleSiOpen() {
+  from.value.siOpen = !from.value.siOpen;
+}
 
-  function getHoveredLocation(location: any) {
-    from.value.hovered = location;
-  }
+function handleFromLocationSelect(location: any) {
+  from.value.place = location;
+}
 
-  function fromNext() {
-    to.value.open = true;
-  }
+function getHoveredLocation(location: any) {
+  from.value.hovered = location;
+}
 
-  function handleToOpen() {
-    to.value.open = !to.value.open;
-    
-  }
+function fromNext() {
+  to.value.open = true;
+}
 
-  function handleToNiOpen() {
-    to.value.niOpen = !to.value.niOpen;
-  }
+function handleToOpen() {
+  to.value.open = !to.value.open;
+}
 
-  function handleToSiOpen() {
-    to.value.siOpen = !to.value.siOpen;
-  }
+function handleToNiOpen() {
+  to.value.niOpen = !to.value.niOpen;
+}
 
-  function handleToLocationSelect(location: any) {
-    to.value.place = location;
-  }
+function handleToSiOpen() {
+  to.value.siOpen = !to.value.siOpen;
+}
 
-  function getToHoveredLocation(location: any) {
-    to.value.hovered = location;
-  }
+function handleToLocationSelect(location: any) {
+  to.value.place = location;
+}
 
-  function toNext() {
-    to.value.open = true;
-  }
+function getToHoveredLocation(location: any) {
+  to.value.hovered = location;
+}
+
+function toNext() {
+  to.value.open = true;
+}
 </script>
 
 <template>
-  <div class='flex justify-center text-left'>
-    <div class='flex items-center justify-start p-3 w-full border-2 rounded-xl border-gj-green'>
-      <!-- From -->
-      <LocationSelect :next='fromNext' :places='places' :getHoveredLocation='getHoveredLocation' :hoveredLocation='from.hovered' label='From' :selected-location='from.place' title="Departure From" :select-open='from.open' :handle-open='handleFromOpen' :handle-ni-open='handleNiOpen' :handle-si-open='handleSiOpen' :ni-open='from.niOpen' :si-open='from.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleFromLocationSelect' />
+  <div class="">
+    <div class="block bg-gj-cream h-36 w-full"></div>
+    <div class="text-left bg-white mx-48 my-20">
+      <h1 class="px-5 text-gj-brown">Book your journey</h1>
+      <div class="flex justify-center text-left">
+        <div class="flex items-center justify-start p-3 w-full">
+          <!-- From -->
+          <LocationSelect
+            :next="fromNext"
+            :places="places"
+            :getHoveredLocation="getHoveredLocation"
+            :hoveredLocation="from.hovered"
+            label="From"
+            :selected-location="from.place"
+            title="Departure From"
+            :select-open="from.open"
+            :handle-open="handleFromOpen"
+            :handle-ni-open="handleNiOpen"
+            :handle-si-open="handleSiOpen"
+            :ni-open="from.niOpen"
+            :si-open="from.siOpen"
+            :northIsland="northIsland"
+            :southIsland="southIsland"
+            :handle-location-select="handleFromLocationSelect"
+          />
 
-      <!-- To -->
-      <LocationSelect :next='toNext' :places='places' :getHoveredLocation='getToHoveredLocation' :hoveredLocation='to.hovered' label='To' :selected-location='to.place' title="Travelling To" :select-open='to.open' :handle-open='handleToOpen' :handle-ni-open='handleToNiOpen' :handle-si-open='handleToSiOpen' :ni-open='to.niOpen' :si-open='to.siOpen' :northIsland='northIsland' :southIsland='southIsland' :handle-location-select='handleToLocationSelect' />
+          <!-- To -->
+          <LocationSelect
+            :next="toNext"
+            :places="places"
+            :getHoveredLocation="getToHoveredLocation"
+            :hoveredLocation="to.hovered"
+            label="To"
+            :selected-location="to.place"
+            title="Travelling To"
+            :select-open="to.open"
+            :handle-open="handleToOpen"
+            :handle-ni-open="handleToNiOpen"
+            :handle-si-open="handleToSiOpen"
+            :ni-open="to.niOpen"
+            :si-open="to.siOpen"
+            :northIsland="northIsland"
+            :southIsland="southIsland"
+            :handle-location-select="handleToLocationSelect"
+          />
 
-      <!-- Leave On -->
-      <CalendarSelect label='Leave On' :model-value='leaveDate' @update:modelValue="(newValue: string) => leaveDate = newValue" :selectedDate='leaveDate' />
+          <!-- Leave On -->
+          <CalendarSelect
+            label="Leave On"
+            :model-value="leaveDate"
+            @update:modelValue="(newValue: string) => leaveDate = newValue"
+            :selectedDate="leaveDate"
+          />
 
-      <!-- Return On -->
-      <CalendarSelect label='Return On' v-model='returnDate' />
+          <!-- Return On -->
+          <CalendarSelect label="Return On" v-model="returnDate" />
+
+          <div class="w-2/3">
+            <span class="opacity-0">-</span>
+            <button
+              class="h-12 w-full rounded-lg font-semibold text-white bg-gj-green hover:bg-gj-green-hover"
+            >
+              Search Fares
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bg-gj-cream w-full h-screen">
+      <div class="mx-48 py-20 px-5">
+        <h1 class="text-gj-brown">Winter Specials</h1>
+        <p class="text-lg leading-3">
+          Book a Northern Explorer journey through a wintry wonderland with our
+          amazing Winter special offers.
+        </p>
+        <div class="flex justify-center mx-48 mt-24 h-1/2">
+          <div class='w-2/3'>
+            <img
+              class="w-full"
+              src="https://images.unsplash.com/photo-1541427468627-a89a96e5ca1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8dHJhaW58ZW58MHx8MHx8fDA%3D&auto=format&fit=crop&w=800&q=60"
+            />
+          </div>
+          <div class="w-1/3 bg-gj-green-shade p-4 text-white">
+            <h2 class='text-4xl'>Save 15% on Northbound Fares*</h2>
+            <p class='text-lg'>Get aboard the Northern Explorer with 15% off this Winter when going northbound.</p>
+            <p class='my-10'>PROMOCODE: GONORTH15</p>
+            <p class='my-10 text-sm'>Offer valid from 1 June to 31 August 2023</p>
+            <a href='#' class='my-10 no-underline text-white text-xl hover:underline hover:text-white'>
+              [*View full terms]
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

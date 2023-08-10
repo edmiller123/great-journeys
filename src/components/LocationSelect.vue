@@ -48,7 +48,7 @@ defineProps<{
         leave-to-class="opacity-0 translate-y-1"
       >
         <PopoverPanel
-          class="absolute left-80 z-10 mt-20 min-h-96 flex max-h-max w-screen max-w-max -translate-x-1/2 px-4"
+          class="absolute left-80 z-10 mt-20 min-h-80 flex max-h-max w-screen max-w-max -translate-x-1/2 px-4"
         >
           <div
             class="w-screen max-w-2xl min-h-96 flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5"
@@ -88,7 +88,12 @@ defineProps<{
                       >
                         {{ place.name }}
                         <span class="absolute inset-0" />
-                        <PhCheck v-if='place.name === selectedLocation.name' :size="20" color="#205052" weight="bold" />
+                        <PhCheck
+                          v-if="place.name === selectedLocation.name"
+                          :size="20"
+                          color="#205052"
+                          weight="bold"
+                        />
                       </div>
                     </div>
                   </template>
@@ -125,14 +130,19 @@ defineProps<{
                       >
                         {{ place.name }}
                         <span class="absolute inset-0" />
-                        <PhCheck v-if='place.name === selectedLocation.name' :size="20" color="#205052" weight="bold" />
+                        <PhCheck
+                          v-if="place.name === selectedLocation.name"
+                          :size="20"
+                          color="#205052"
+                          weight="bold"
+                        />
                       </div>
                     </div>
                   </template>
                 </div>
               </div>
               <div
-                class="w-1/2 flex justify-center items-center h-full mt-8 mb-4 py-4 cursor-pointer"
+                class="w-1/2 flex flex-col justify-center items-center h-full mt-3 pt-4 cursor-pointer"
               >
                 <nzSVG
                   :selectedLocation="selectedLocation"
@@ -141,19 +151,19 @@ defineProps<{
                   :getHoveredLocation="getHoveredLocation"
                   :handle-location-select="handleLocationSelect"
                 />
+                <div class="w-[140%] ml-28 p-4 text-white transition-all">
+                  <PopoverButton
+                    :disabled="!selectedLocation"
+                    @click="next"
+                    :class="
+                      !selectedLocation
+                        ? 'bg-gray-300 rounded-lg uppercase w-1/3 py-4 text-xl focus:outline-none hover:outline-none'
+                        : 'bg-gj-green rounded-lg uppercase w-1/3 py-4 text-xl cursor-pointer hover:bg-gj-green-hover'
+                    "
+                    >Next
+                  </PopoverButton>
+                </div>
               </div>
-            </div>
-            <div class="p-4 text-white transition-all">
-              <PopoverButton
-                :disabled="!selectedLocation"
-                @click="next"
-                :class="
-                  !selectedLocation
-                    ? 'bg-gray-300 uppercase w-1/3 py-4 text-xl focus:outline-none hover:outline-none'
-                    : 'bg-gj-green uppercase w-1/3 py-4 text-xl cursor-pointer hover:bg-gj-green-hover'
-                "
-              >Next
-              </PopoverButton>
             </div>
           </div>
         </PopoverPanel>
