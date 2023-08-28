@@ -1,17 +1,41 @@
-export const northIsland = [
-  { name: "Auckland", x: 680, y: 380 },
-  { name: "Hamilton", x: 750, y: 500 },
-  { name: "Palmerston North", x: 760, y: 750 },
-  { name: "Tongariro National Park", x: 760, y: 620 },
-  { name: "Wellington", x: 700, y: 870 },
+import { place } from "./types/types";
+
+export const northIsland: place[] = [
+  { name: "Auckland", x: 680, y: 380, train: ["Northern Explorer"] },
+  { name: "Hamilton", x: 750, y: 500, train: ["Northern Explorer"] },
+  { name: "Palmerston North", x: 760, y: 750, train: ["Northern Explorer"] },
+  {
+    name: "Tongariro National Park",
+    x: 760,
+    y: 620,
+    train: ["Northern Explorer"],
+  },
+  { name: "Wellington", x: 700, y: 870, train: ["Northern Explorer"] },
 ];
 
-export const southIsland = [
-  { name: "Blenheim", x: 600, y: 890 },
-  { name: "Christchurch", x: 490, y: 1100 },
-  { name: "Greymouth", x: 390, y: 1000 },
-  { name: "Kaikoura", x: 580, y: 1000 },
-  { name: "Queenstown", x: 220, y: 1280 },
+export const southIsland: place[] = [
+  { name: "Blenheim", x: 600, y: 890, train: ["Coastal Pacific"] },
+  {
+    name: "Christchurch",
+    x: 490,
+    y: 1100,
+    train: ["Coastal Pacific", "TranzAlpine"],
+    adjacents: ["Greymouth"],
+  },
+  {
+    name: "Greymouth",
+    x: 390,
+    y: 1000,
+    train: ["TranzAlpine", "Scenic Coach"],
+    adjacents: ["Christchurch"],
+  },
+  {
+    name: "Kaikoura",
+    x: 580,
+    y: 1000,
+    train: ["Coastal Pacific"],
+  },
+  { name: "Queenstown", x: 220, y: 1280, train: ["Scenic Coach"] },
 ];
 
 export const places = northIsland.concat(southIsland);

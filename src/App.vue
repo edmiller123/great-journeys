@@ -10,6 +10,7 @@ const from = ref({
   open: false,
   niOpen: true,
   siOpen: true,
+  disabled: false,
 });
 const to = ref({
   place: "",
@@ -17,9 +18,12 @@ const to = ref({
   open: false,
   niOpen: true,
   siOpen: true,
+  disabled: true,
 });
 const leaveDate = ref("");
 const returnDate = ref("");
+
+let localSouthIsland: any = ref([]);
 
 watch(leaveDate, (newQuestion, oldQuestion) => {
   if (newQuestion !== oldQuestion) {
@@ -40,7 +44,51 @@ function handleSiOpen() {
 }
 
 function handleFromLocationSelect(location: any) {
+  let adjacent = null;
+  if(location.hasOwnProperty("adjacents")) {
+    if(southIsland.some((item: any) => item.name === location.name)) {
+      adjacent = southIsland.find((item: any) => location.adjacents.includes(item.name));
+    }
+    else {
+      adjacent = northIsland.find((item: any) => location.adjacents.includes(item.name));
+    }
+  }
+  if(location.train.includes("Northern Explorer")) {
+    to.value.siOpen = false;
+    to.value.niOpen = true;
+  }
+  else if(location.train.includes("Coastal Pacific")) {
+    to.value.niOpen = false;
+    to.value.siOpen = true;
+    if(adjacent) {
+      localSouthIsland.value = [...southIsland.filter((item: any) => item.train.includes("Coastal Pacific") && item.name !== location.name).map((item: any) => {return {name: item.name, x: item.x, y: item.y, train: item.train}}), adjacent];
+    }
+    else {
+      localSouthIsland.value = southIsland.filter((item: any) => item.train.includes("Coastal Pacific") && item.name !== location.name).map((item: any) => {return {name: item.name, x: item.x, y: item.y, train: item.train}});
+    }
+  }
+  else if(location.train.includes("TranzAlpine") && location.train.length === 1) {
+    to.value.niOpen = false;
+    to.value.siOpen = true;
+    if(adjacent) {
+      localSouthIsland.value = [...southIsland.filter((item: any) => item.train.includes("TranzAlpine") && item.name !== location.name).map((item: any) => {return {name: item.name, x: item.x, y: item.y, train: item.train}}), adjacent];
+    }
+    else {
+      localSouthIsland.value = southIsland.filter((item: any) => item.train.includes("TranzAlpine") && item.name !== location.name).map((item: any) => {return {name: item.name, x: item.x, y: item.y, train: item.train}});
+    }
+  }
+  else if(location.train.includes("Scenic Coach")) {
+    to.value.niOpen = false;
+    to.value.siOpen = true;
+    if(adjacent) {
+      localSouthIsland.value = [...southIsland.filter((item: any) => item.train.includes("Scenic Coach") && item.name !== location.name).map((item: any) => {return {name: item.name, x: item.x, y: item.y, train: item.train}}), adjacent];
+    }
+    else {
+      localSouthIsland.value = southIsland.filter((item: any) => item.train.includes("Scenic Coach") && item.name !== location.name).map((item: any) => {return {name: item.name, x: item.x, y: item.y, train: item.train}});
+    }
+  }
   from.value.place = location;
+  to.value.disabled = false;
 }
 
 function getHoveredLocation(location: any) {
@@ -90,6 +138,7 @@ function toNext() {
             :getHoveredLocation="getHoveredLocation"
             :hoveredLocation="from.hovered"
             label="From"
+            :other-selection='to.place'
             :selected-location="from.place"
             title="Departure From"
             :select-open="from.open"
@@ -101,6 +150,7 @@ function toNext() {
             :northIsland="northIsland"
             :southIsland="southIsland"
             :handle-location-select="handleFromLocationSelect"
+            :disabled='from.disabled'
           />
 
           <!-- To -->
@@ -110,6 +160,7 @@ function toNext() {
             :getHoveredLocation="getToHoveredLocation"
             :hoveredLocation="to.hovered"
             label="To"
+            :other-selection='from.place'
             :selected-location="to.place"
             title="Travelling To"
             :select-open="to.open"
@@ -119,8 +170,9 @@ function toNext() {
             :ni-open="to.niOpen"
             :si-open="to.siOpen"
             :northIsland="northIsland"
-            :southIsland="southIsland"
+            :southIsland="localSouthIsland.length > 0 ? localSouthIsland : southIsland"
             :handle-location-select="handleToLocationSelect"
+            :disabled='to.disabled'
           />
 
           <!-- Leave On -->
@@ -148,7 +200,7 @@ function toNext() {
     <div class="bg-gj-cream w-full h-screen">
       <div class="mx-48 py-20 px-5">
         <h1 class="text-gj-brown">Winter Specials</h1>
-        <p class="text-lg leading-3">
+        <p class="text-xl leading-3">
           Book a Northern Explorer journey through a wintry wonderland with our
           amazing Winter special offers.
         </p>

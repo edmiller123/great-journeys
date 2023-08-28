@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { PhCaretUp, PhCaretDown, PhCheck } from "@phosphor-icons/vue";
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/vue";
 import nzSVG from "./nzSVG.vue";
@@ -10,6 +11,7 @@ defineProps<{
   hoveredLocation: any;
   label: string;
   handleOpen: () => void;
+  otherSelection: any;
   selectedLocation: any;
   title: string;
   selectOpen: boolean;
@@ -20,24 +22,71 @@ defineProps<{
   northIsland: any;
   southIsland: any;
   handleLocationSelect: (place: any) => void;
+  disabled: boolean;
 }>();
+
+const tooltip = ref(false);
+
+function showTooltip() {
+  tooltip.value = true;
+}
+
+function hideTooltip() {
+  tooltip.value = false;
+}
 </script>
 
 <template>
   <div class="flex flex-col w-full mx-3">
     <Popover class="relative flex flex-col">
-      <label class="font-semibold">{{ label }}</label>
-      <PopoverButton
-        class="relative flex items-center pl-3 border border-gj-green rounded-md h-12 cursor-pointer hover:border-gj-green focus:outline-none"
+      <template v-if='disabled'>
+      <label
+        :class="disabled ? 'font-semibold text-gray-300' : 'font-semibold'"
+        >{{ label }}</label
       >
-        <div @click="handleOpen">
-          <span>{{ selectedLocation.name }}</span>
-          <PhCaretDown
-            :size="12"
-            class="absolute top-3.5 right-2 w-5 h-5 z-50"
-          />
-        </div>
-      </PopoverButton>
+      <div
+        :class="
+          disabled
+            ? 'relative flex items-center pl-3 border border-gray-300 rounded-md h-12 cursor-pointer text-gray-300'
+            : 'relative flex items-center pl-3 border border-gj-green rounded-md h-12 cursor-pointer hover:border-gj-green focus:outline-none'
+        "
+        @mouseover="showTooltip"
+        @mouseleave="hideTooltip"
+      >
+        <PopoverButton :disabled="disabled">
+          <div >
+            <span>{{ selectedLocation.name }}</span>
+            <PhCaretDown
+              :size="12"
+              class="absolute top-3.5 right-2 w-5 h-5 z-50"
+            />
+          </div>
+        </PopoverButton>
+      </div>
+      <span
+        v-if="tooltip && disabled"
+        class="absolute z-50 w-full text-center top-20 bg-gj-green text-white rounded-lg px-3 py-2"
+        >Please select a departure location</span
+      >
+    </template>
+
+    <template v-else>
+      <label
+        class="font-semibold"
+        >{{ label }}</label
+      >
+        <PopoverButton class='relative flex items-center pl-3 border border-gj-green rounded-md h-12 cursor-pointer hover:border-gj-green focus:outline-none'>
+          <div @click="handleOpen">
+            <span>{{ selectedLocation.name }}</span>
+            <PhCaretDown
+              :size="12"
+              class="absolute top-3.5 right-2 w-5 h-5 z-50"
+            />
+          </div>
+        </PopoverButton>
+    </template>
+
+    
 
       <transition
         enter-active-class="transition ease-out duration-200"
